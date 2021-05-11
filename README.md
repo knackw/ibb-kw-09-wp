@@ -50,7 +50,7 @@ Zum Beenden des Services gibst du
 
 ein.
 
-## 5. Schlussbemerkung
+## 3. Schlussbemerkung
 
 Solltest Du Fehler entdecken, Vorschläge oder Anregungen haben scheu Dich nicht mir ein Ticket zu schreiben. 
 
