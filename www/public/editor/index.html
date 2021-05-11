@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Unbenanntes Dokument</title>
+	<style>
+		* {
+			font-family: Verdana;
+			font-size:12px;
+		}
+		label {
+			display:inline-block;
+			width:150px;
+		}
+		#neuesBild {
+			background-color: lightgreen;
+			padding:50px;
+		}
+		table, td {
+			border-collapse: collapse;
+			border: 1px solid black;
+			padding:15px;
+			width:100%;
+		}
+		td, th {
+			vertical-align: top;
+			width:20%;
+		}
+	</style>
+	
+	<script src="../js/jquery-3.6.0.min.js"></script>
+	
+	<script>
+	var bilderarray = new Array();
+	function loadAllPics() {	
+		$.ajax({
+			url: "php/loadallpics.php",
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				alert(data.message);
+				bilderarray = data.bilderarray;
+				//empfangene bilder auswerten
+				var htmlstring = "";
+				
+				 htmlstring += "<thead>";
+				htmlstring += "<tr>";
+				htmlstring += "<th>Überschrift</th>";
+				htmlstring += "<th>Fliesstext</th>";
+				htmlstring += "<th>Bildquelle</th>";
+				htmlstring += "<th>Bild</th>";
+				htmlstring += "<th>Autor</th>";
+				htmlstring += "</tr>";
+				htmlstring += "</thead>";
+				
+				htmlstring += "<tbody>";
+				for(var a=0; a<bilderarray.length; a++) {
+					/*
+					console.log(a + " : " + bilderarray[a].headline[0]);
+					console.log(a + " : " + bilderarray[a].fliesstext[0]);
+					console.log(a + " : " + bilderarray[a].bildquelle[0]);
+					console.log(a + " : " + bilderarray[a].autor[0]);
+					console.log("==========================");
+					*/
+					htmlstring += "<tr>";
+					htmlstring += "<td>" + bilderarray[a].headline[0] + "</td>";
+					htmlstring += "<td>" + bilderarray[a].fliesstext[0] + "</td>";
+					htmlstring += "<td>" + bilderarray[a].bildquelle[0] + "</td>";
+					htmlstring += "<td><img src='../bilder/" + bilderarray[a].bildquelle[0] + "' style='width:100px;height:100px'></td>";
+					htmlstring += "<td>" + bilderarray[a].autor[0] + "</td>";
+					htmlstring += "</tr>";
+				}
+				htmlstring += "</tbody>";
+				document.getElementById("alleBilder").innerHTML = htmlstring;
+			},
+			error: function() {
+				alert("error allebilderladen");
+			}
+		});
+	}
+		
+		
+		
+		
+		
+		
+		
+		////////////////////////////
+		//neues bild einfügen
+		////////////////////////////
+		function newPic() {
+			//felder auslesen
+			var myheadline = document.getElementById("headline").value;
+			var myautor = document.getElementById("autor").value;
+			var myfliesstext = document.getElementById("fliesstext").value;
+			//datei für upload vorbereiten
+			var datei = document.getElementById("bild");
+			var bildanzahl = datei.files.length;
+			//alert(myheadline);
+			//form bauen
+			var myform = new FormData();
+			myform.append("headline", myheadline);
+			myform.append("autor", myautor);
+			myform.append("fliesstext", myfliesstext);
+			myform.append("bild", datei.files[0]);
+			
+			//daten nach php senden
+			$.ajax({
+				url: "php/newPicXML.php",
+				data:myform,
+				type: "post",
+				dataType: "json",
+				contentType: false,
+				processData: false,
+				success: function(data) {
+					//ergebnis ansehen
+					alert(data);
+					loadAllPics();
+				},
+				error: function() {
+					alert("error new pic");
+				}
+			});
+			
+		}
+	</script>
+	
+</head>
+
+<body>
+	<h2>Editor</h2>
+	
+	<!-- alle bilder in tabelle zeigen -->
+	<table id="alleBilder"></table>
+	
+	
+	
+	<!-- ========================= -->
+	<!-- Neues Bild
+	<!-- ========================= -->
+	<div id="neuesBild">
+		<p>
+			<label for="headline">Überschrift</label>
+			<input type="text" id="headline">
+		</p>
+	
+		<p>
+			<label for="fliesstext">Beschreibung</label>
+			<textarea id="fliesstext"></textarea>
+		</p>
+	
+		<p>
+			<label for="autor">Autor</label>
+			<input type="text" id="autor">
+		</p>	
+	
+		<p>
+			<label for="bild">Bild</label>
+			<input type="file" id="bild">
+		</p>
+	
+		<p>
+			<input type="button" onclick="newPic()" value="senden">
+		</p>
+	</div>
+	
+	<script>
+		loadAllPics();
+	</script>
+</body>
+</html>

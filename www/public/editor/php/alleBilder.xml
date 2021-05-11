@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<alleBilder>
+  <Bild kategorie="Foto">
+    <Bildquelle>ff29aa34e1.jpg</Bildquelle>
+    <Headline>headline 2</Headline>
+    <Fliesstext>beschreibung 2</Fliesstext>
+    <Autor>jo</Autor>
+  </Bild>
+  <Bild kategorie="Foto">
+    <Bildquelle>f2de737c77.jpg</Bildquelle>
+    <Headline>headline 1</Headline>
+    <Fliesstext>beschreibung 1</Fliesstext>
+    <Autor>jo</Autor>
+  </Bild>
+</alleBilder>

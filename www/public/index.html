@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de_DE">
+<head>
+<meta charset="utf-8">
+<title>Unbenanntes Dokument</title>
+	
+	<script src="js/jquery-3.6.0.min.js"></script>
+	
+	<script>
+	var bilderarray = new Array();
+	
+	function loadAllPics() {	
+		$.ajax({
+			url: "php/loadallpics.php",
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				alert(data.message);
+				bilderarray = data.bilderarray;
+				//empfangene bilder auswerten
+				var htmlstring = "";
+				for(var a=0; a<bilderarray.length; a++) {
+					/*
+					console.log(a + " : " + bilderarray[a].headline[0]);
+					console.log(a + " : " + bilderarray[a].fliesstext[0]);
+					console.log(a + " : " + bilderarray[a].bildquelle[0]);
+					console.log(a + " : " + bilderarray[a].autor[0]);
+					console.log("==========================");
+					*/
+					htmlstring += "<h2>" + bilderarray[a].headline[0] + "</h2>";
+					htmlstring += "<img src='bilder/" + bilderarray[a].bildquelle[0] + "'>";
+					htmlstring += "<p>" + bilderarray[a].fliesstext[0] + "</p>";
+					htmlstring += "<p>" + bilderarray[a].autor[0] + "</p>";
+					htmlstring += "<hr>";
+				}
+				document.getElementById("slideshow").innerHTML = htmlstring;
+			},
+			error: function() {
+				alert("error allebilderladen");
+			}
+		});
+	}
+		
+		
+	
+	</script>
+	
+</head>
+
+<body>
+	<div id="slideshow"></div>
+	
+	
+	<script>
+		loadAllPics();
+	</script>
+</body>
+</html>
