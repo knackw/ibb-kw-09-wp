@@ -26,7 +26,7 @@ Diese Weiterbildung vermittelt Ihnen fortgeschrittene Kenntnisse in Javascript, 
 
 ## 1. Installieren von Docker und Docker Compose
 
-Siehe hierzu:
+Siehe hierzu: https://github.com/knackw/docker_nginx_php8_mariadb10_phpmyadmin410
 
 ## 2. Installation der HTML Entwicklungsumgebung
 
